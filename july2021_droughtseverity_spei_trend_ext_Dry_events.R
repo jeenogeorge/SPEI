@@ -5,7 +5,7 @@ library(maptools)
 library(rgeos)
 library(dplyr)
 library(ggplot2)
-#import the raster file of the climate 
+#import the raster file of the SPEI
 spei <- stack(("X:/XXXX/spei01.tif")) 
 
 #finding SPEI01
