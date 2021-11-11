@@ -5,24 +5,19 @@ library(maptools)
 library(rgeos)
 library(dplyr)
 library(ggplot2)
-#import the raster file of the climate 
-spei <- stack(("E:/data_cities/drought_global_map/spei01.tif")) 
-#plot(spei)
-#b <- calc(spei, fun = mean)
-#writeRaster(b, file = "E:/data_cities/drought_global_map/spei01_avg_from_R_feb_droughtseverity_spei.tif",overwrite = T)
-#finding SPEI01
-parent.folder <- "E:/phd iit kgp/WORK/cities"
-sub.folders <- list.dirs(parent.folder, recursive=F)[31]
+#import the raster file of the SPEI
+spei <- stack(("X:/XXXXX/spei01.tif")) 
+
+parent.folder <- "X:/XXX/cities"
+sub.folders <- list.dirs(parent.folder, recursive=F)[1:N]
 sub.folders
-#r.scripts <- file.path("E:/Rwater", "hyp1_hyp2_04012019_entropy_trimmed.r")
+
 # Run scripts in sub-folders 
 for(i in sub.folders) {
   setwd(i)
   work_direc <- getwd()
   city_name <- unlist(strsplit(work_direc, split = "/", fixed = T))[5]
   city_name
-  
-  #city_name <- "Baghdad"
   
   avg_ext_wet <- 200
   ext_wet_num <- 200
@@ -46,12 +41,11 @@ for(i in sub.folders) {
   ext_drt_num <- 200
   ext_drt_index <- 200
 
-#import the study area
-#city_name <- "Ahvaz"
+
 #study area
-city_area <- readOGR(dsn = sprintf("E:/phd iit kgp/WORK/cities/%s",city_name), layer = "studyarea")
+city_area <- readOGR(dsn = sprintf("X:/XXXX/cities/%s",city_name), layer = "studyarea")
 #plot(city_area)
-spei_crop <- crop(spei, city_area, snap = "near")#for karachi snap = "out"
+spei_crop <- crop(spei, city_area, snap = "near")
 #plot(spei_crop)
 spei_crop[]
 dim(spei_crop[])
@@ -83,6 +77,6 @@ trend_db <- data.frame(name = city_name, t_51 = t_51,
                        t_11 = t_11,
                        t_21 = t_21)
                     
-write.table(trend_db, file = 'E:/phd iit kgp/WORK/results_nov2019/trend_db', 
+write.table(trend_db, file = 'X:/XXX/results_nov2019/trend_db', 
             append = T, sep = '\t', row.names = F, col.names = F)
 }
